@@ -3,16 +3,17 @@ package com.example.habbittrainer.models;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Hobby implements Serializable {
     private String name;
     private Time scheduledTime = new Time(System.currentTimeMillis());
-    private int days = Days.NONE.getIntValue();
+    private boolean[] days = new boolean[7];
     private boolean enableReminder = false;
     private List<HobbyActivity> hobbyActivities;
 
-    public Hobby(String name, Time scheduledTime, int days, boolean enableReminder) {
+    public Hobby(String name, Time scheduledTime, boolean[] days, boolean enableReminder) {
         this.name = name;
         this.scheduledTime = scheduledTime;
         this.days = days;
@@ -45,11 +46,11 @@ public class Hobby implements Serializable {
         this.scheduledTime = scheduledTime;
     }
 
-    public int getDays() {
+    public  boolean[] getDays() {
         return days;
     }
 
-    public void setDays(int days) {
+    public void setDays(boolean[] days) {
         this.days = days;
     }
 
@@ -74,7 +75,7 @@ public class Hobby implements Serializable {
         return "Hobby{" +
                 "name='" + name + '\'' +
                 ", scheduledTime=" + scheduledTime +
-                ", days=" + days +
+                ", days=" + Arrays.toString(days) +
                 ", enableReminder=" + enableReminder +
                 ", hobbyActivities=" + hobbyActivities +
                 '}';

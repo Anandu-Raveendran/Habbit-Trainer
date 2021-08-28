@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavArgs;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.habbittrainer.databinding.AddHobbyActivityBinding;
 import com.example.habbittrainer.databinding.EditFragmentBinding;
@@ -41,7 +43,6 @@ public class EditFragment extends Fragment {
     private EditViewModel mViewModel;
     Hobby hobby;
     private EditFragmentBinding binding;
-    private List<Hobby> hobbies;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -51,45 +52,66 @@ public class EditFragment extends Fragment {
 
         EditFragmentArgs args = EditFragmentArgs.fromBundle(getArguments());
         hobby = args.getHobby();
-        Log.i("ANANDU",hobby.toString());
-        if(hobby==null)
+        Log.i("ANANDU", hobby.toString());
+        if (hobby == null)
             hobby = new Hobby();
         mViewModel = new ViewModelProvider(this).get(EditViewModel.class);
 
         mViewModel.setHobby(hobby);
 
         binding.activitiesListView.setAdapter(new ActivityListAdaptor(hobby.getHobbyActivities()));
-       RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.activitiesListView.setLayoutManager(layoutManager);
 
         //set the time formatter on text input
         binding.scheduledTimeTextView.addTextChangedListener(new MyTimeTextWatcher());
-        binding.addActivityBtn.setOnClickListener(v -> initActivityDialogBox(container, hobby));
+        binding.addActivityBtn.setOnClickListener(v -> {
+            initActivityDialogBox(container, hobby);
+        });
 
         binding.saveBtn.setOnClickListener(v -> {
-            int days = Days.NONE.getIntValue();
-            if (binding.sunday.isChecked()) days |= Days.SUNDAY.getIntValue();
-            if (binding.monday.isChecked()) days |= Days.MONDAY.getIntValue();
-            if (binding.tuesday.isChecked()) days |= Days.TUESDAY.getIntValue();
-            if (binding.wednesday.isChecked()) days |= Days.WEDNESDAY.getIntValue();
-            if (binding.thursday.isChecked()) days |= Days.THURSDAY.getIntValue();
-            if (binding.friday.isChecked()) days |= Days.FRIDAY.getIntValue();
-            if (binding.saturday.isChecked()) days |= Days.SATURDAY.getIntValue();
-
+            String toastMessage = "";
             SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
-            try {
-                hobby.setName(binding.routineNameTextView.getText().toString());
-                hobby.setScheduledTime(new Time(sdf.parse(binding.scheduledTimeTextView.getText().toString()).getTime()));
-                hobby.setDays(days);
-                hobby.setEnableReminder(binding.reminderSwitch.isActivated());
-                mViewModel.setHobby(hobby);
-            } catch (ParseException e) {
-                e.printStackTrace();
+
+            if (binding.routineNameTextView.getText().toString().isEmpty()) {
+                toastMessage += "Routine's name cant be empty";
+            } else if (binding.scheduledTimeTextView.getText().toString().isEmpty()) {
+                toastMessage += "Scheduled time cant be empty";
+            } else {
+                boolean[] days = new boolean[7];
+                days[Days.SUNDAY.getIntValue()] = binding.sunday.isChecked();
+                days[Days.MONDAY.getIntValue()] = binding.monday.isChecked();
+                days[Days.TUESDAY.getIntValue()] = binding.tuesday.isChecked();
+                days[Days.WEDNESDAY.getIntValue()] = binding.wednesday.isChecked();
+                days[Days.THURSDAY.getIntValue()] = binding.thursday.isChecked();
+                days[Days.FRIDAY.getIntValue()] = binding.friday.isChecked();
+                days[Days.SATURDAY.getIntValue()] = binding.saturday.isChecked();
+
+
+                try {
+                    hobby.setName(binding.routineNameTextView.getText().toString());
+                    hobby.setScheduledTime(new Time(sdf.parse(binding.scheduledTimeTextView.getText().toString()).getTime()));
+                    hobby.setDays(days);
+                    hobby.setEnableReminder(binding.reminderSwitch.isActivated());
+                    mViewModel.setHobby(hobby);
+                    toastMessage = "Data saved successfully";
+
+                    Navigation.findNavController(view)
+                            .navigate(EditFragmentDirections.actionEditFragmentToFirstFragment().setHobby(hobby));
+
+                } catch (ParseException e) {
+                    toastMessage = "!!! Data Error: data not saved !!!";
+                    e.printStackTrace();
+                }
             }
+            Toast.makeText(getContext(), toastMessage, Toast.LENGTH_SHORT).show();
+
             Log.i("ANANDU", mViewModel.getHobby().getValue().toString());
         });
-        binding.cancelBtn.setOnClickListener(v -> NavHostFragment.findNavController(EditFragment.this)
-                .navigate(R.id.action_editFragment_to_FirstFragment));
+        binding.cancelBtn.setOnClickListener(v ->
+                Navigation.findNavController(view)
+                        .navigate(EditFragmentDirections.actionEditFragmentToFirstFragment()));
+
 
         return view;
     }
@@ -112,6 +134,7 @@ public class EditFragment extends Fragment {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
+            binding.activitiesListView.getAdapter().notifyDataSetChanged();
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override

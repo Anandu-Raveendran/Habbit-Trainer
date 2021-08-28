@@ -161,6 +161,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="5dp"
+        android:background="#E3D0D0"
         app:layout_constraintBottom_toTopOf="@+id/add_activity_btn"
         app:layout_constraintEnd_toEndOf="@+id/routineNameTextView"
         app:layout_constraintHorizontal_bias="1.0"
