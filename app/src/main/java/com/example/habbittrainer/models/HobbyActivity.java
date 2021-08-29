@@ -1,7 +1,8 @@
 package com.example.habbittrainer.models;
 
+import java.io.Serializable;
 import java.sql.Time;
-public class HobbyActivity {
+public class HobbyActivity implements Serializable {
     private String name;
     private Time timeNeeded = Time.valueOf("0:01:0");
     private int repetitions = 1;

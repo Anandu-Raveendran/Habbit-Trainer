@@ -1,25 +1,21 @@
 package com.example.habbittrainer;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavArgs;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habbittrainer.databinding.AddHobbyActivityBinding;
 import com.example.habbittrainer.databinding.EditFragmentBinding;
@@ -31,18 +27,13 @@ import com.example.habbittrainer.models.HobbyActivity;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 
-public class EditFragment extends Fragment {
-
-    public static EditFragment newInstance() {
-        return new EditFragment();
-    }
+public class EditFragment extends Fragment implements ListItemCallbackContract {
 
     private EditViewModel mViewModel;
-    Hobby hobby;
+    private Hobby hobby;
     private EditFragmentBinding binding;
+    private int edit_index=-1;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -52,14 +43,26 @@ public class EditFragment extends Fragment {
 
         EditFragmentArgs args = EditFragmentArgs.fromBundle(getArguments());
         hobby = args.getHobby();
+        edit_index = args.getEditIndex();
         Log.i("ANANDU", hobby.toString());
-        if (hobby == null)
+        if (hobby == null) {
             hobby = new Hobby();
+        } else{
+            binding.routineNameTextView.setText(hobby.getName());
+            binding.scheduledTimeTextView.setText(hobby.getScheduledTime().toString());
+            binding.sunday.setChecked(hobby.getDays()[Days.SUNDAY.getIntValue()]);
+            binding.monday.setChecked(hobby.getDays()[Days.MONDAY.getIntValue()]);
+            binding.tuesday.setChecked(hobby.getDays()[Days.TUESDAY.getIntValue()]);
+            binding.wednesday.setChecked(hobby.getDays()[Days.WEDNESDAY.getIntValue()]);
+            binding.thursday.setChecked(hobby.getDays()[Days.THURSDAY.getIntValue()]);
+            binding.friday.setChecked(hobby.getDays()[Days.FRIDAY.getIntValue()]);
+            binding.saturday.setChecked(hobby.getDays()[Days.SATURDAY.getIntValue()]);
+            binding.reminderSwitch.setChecked(hobby.isEnableReminder());
+        }
         mViewModel = new ViewModelProvider(this).get(EditViewModel.class);
-
         mViewModel.setHobby(hobby);
 
-        binding.activitiesListView.setAdapter(new ActivityListAdaptor(hobby.getHobbyActivities()));
+        binding.activitiesListView.setAdapter(new ActivityListAdaptor(hobby.getHobbyActivities(),this));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.activitiesListView.setLayoutManager(layoutManager);
 
@@ -87,17 +90,17 @@ public class EditFragment extends Fragment {
                 days[Days.FRIDAY.getIntValue()] = binding.friday.isChecked();
                 days[Days.SATURDAY.getIntValue()] = binding.saturday.isChecked();
 
-
                 try {
                     hobby.setName(binding.routineNameTextView.getText().toString());
                     hobby.setScheduledTime(new Time(sdf.parse(binding.scheduledTimeTextView.getText().toString()).getTime()));
                     hobby.setDays(days);
                     hobby.setEnableReminder(binding.reminderSwitch.isActivated());
                     mViewModel.setHobby(hobby);
-                    toastMessage = "Data saved successfully";
+                    toastMessage = "Data edit complete";
 
                     Navigation.findNavController(view)
-                            .navigate(EditFragmentDirections.actionEditFragmentToFirstFragment().setHobby(hobby));
+                            .navigate(EditFragmentDirections.actionEditFragmentToFirstFragment().setHobby(hobby)
+                                    .setEditIndex(edit_index));
 
                 } catch (ParseException e) {
                     toastMessage = "!!! Data Error: data not saved !!!";
@@ -162,5 +165,10 @@ public class EditFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         binding = null;
+    }
+
+    @Override
+    public void listItemClickCallback(View v, int position) {
+
     }
 }

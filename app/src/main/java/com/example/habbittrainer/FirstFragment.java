@@ -1,6 +1,7 @@
 package com.example.habbittrainer;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,34 +21,48 @@ import com.example.habbittrainer.models.HobbyActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirstFragment extends Fragment {
+public class FirstFragment extends Fragment implements ListItemCallbackContract{
 
     private FragmentFirstBinding binding;
 
-    int indexForEditFrag;
-    List<Hobby> hobbies = new ArrayList<>();
+    int indexForEditFrag = 0;
+    List<Hobby> hobbies;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentFirstBinding.inflate(inflater, container, false);
-        FirstFragmentArgs args = FirstFragmentArgs.fromBundle(getArguments());
-        if(args != null)
-            if(args.getHobby()!=null) {
-//                hobbies.remove(indexForEditFrag);
-                hobbies.add(indexForEditFrag, args.getHobby());
-            }
-        //Stores the activities list
-        List<HobbyActivity> newActivities = new ArrayList<>();
-        long milli = 123456789999l;
-        java.sql.Time time = new java.sql.Time(milli);
-        Hobby h = new Hobby("name", time, new boolean[7], true);
-        newActivities.add(new HobbyActivity("Activity1", time, 1, time, time));
-        h.setHobbyActivities(newActivities);
-        hobbies.add(h);
 
-        binding.HobbyListView.setAdapter(new HobbyListAdaptor(hobbies));
+        //Stores the activities list
+//        List<HobbyActivity> newActivities = new ArrayList<>();
+//        long milli = 123456789999l;
+//        java.sql.Time time = new java.sql.Time(milli);
+//        Hobby h = new Hobby("name", time, new boolean[7], true);
+//        newActivities.add(new HobbyActivity("Activity1", time, 1, time, time));
+//        h.setHobbyActivities(newActivities);
+
+        hobbies = DataSource.readHobbies(getContext());
+        if(hobbies == null) {
+            Log.i("Anandu","data source returned null");
+            hobbies = new ArrayList<>();
+        } else
+            Log.i("Anandu","Data source list is not null");
+        MainActivity.hobbyList = hobbies;
+
+        binding.HobbyListView.setAdapter(new HobbyListAdaptor(hobbies, this));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.HobbyListView.setLayoutManager(layoutManager);
+
+        FirstFragmentArgs args = FirstFragmentArgs.fromBundle(getArguments());
+        if(args != null)
+            if(args.getHobby() != null) {
+                //If editIndex is same as hobby size its cause this is a newly created object not yet in list
+                if((args.getEditIndex() != hobbies.size()) && (hobbies.size() > 0)) {
+                    hobbies.remove(args.getEditIndex());
+                }
+                hobbies.add(indexForEditFrag, args.getHobby());
+                DataSource.write(getContext(),hobbies);
+                binding.HobbyListView.getAdapter().notifyDataSetChanged();
+            }
 
         return binding.getRoot();
     }
@@ -59,14 +74,16 @@ public class FirstFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                indexForEditFrag = 0;
+                //Edit index is set to hobby size so that a new object is created.
                 Navigation.findNavController(view).
                         navigate(FirstFragmentDirections.actionFirstFragmentToEditFragment()
-                                .setHobby(hobbies.get(indexForEditFrag)));
+                                .setHobby(new Hobby()).setEditIndex(hobbies.size()));
 
             }
         });
     }
+
+
 
     @Override
     public void onResume() {
@@ -80,4 +97,12 @@ public class FirstFragment extends Fragment {
         binding = null;
     }
 
+    @Override
+    //Hobby list item callback
+    public void listItemClickCallback(View v, int position) {
+        //Edit index is set to hobby size so that a new object is created.
+        Navigation.findNavController(v).
+                navigate(FirstFragmentDirections.actionFirstFragmentToEditFragment()
+                        .setHobby(hobbies.get(position)).setEditIndex(position));
+    }
 }

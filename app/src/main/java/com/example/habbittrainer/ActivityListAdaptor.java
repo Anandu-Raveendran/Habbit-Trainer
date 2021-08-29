@@ -4,17 +4,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.habbittrainer.databinding.ActivityListViewBinding;
-import com.example.habbittrainer.models.Hobby;
 import com.example.habbittrainer.models.HobbyActivity;
 
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +19,15 @@ import java.util.List;
 public class ActivityListAdaptor extends RecyclerView.Adapter<ActivityListAdaptor.MyViewHolder> {
 
     private List<HobbyActivity> activities = new ArrayList<>();
+    private ListItemCallbackContract contract;
 
-    public ActivityListAdaptor(List<HobbyActivity> activities) {
+    public ActivityListAdaptor(List<HobbyActivity> activities, ListItemCallbackContract callbackContract) {
         for (HobbyActivity h: activities) {
             Log.i("ANANDU",h.toString());
 
         }
         this.activities = activities;
+        this.contract = callbackContract;
     }
 
     public void setActivities(List<HobbyActivity> activities) {
@@ -37,10 +36,10 @@ public class ActivityListAdaptor extends RecyclerView.Adapter<ActivityListAdapto
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textView;
+        ActivityListViewBinding binding;
         public MyViewHolder(@NotNull ActivityListViewBinding activityListViewBinding) {
             super(activityListViewBinding.getRoot());
-            textView = activityListViewBinding.hobbyName;
+            binding = activityListViewBinding;
         }
     }
 
@@ -55,7 +54,14 @@ public class ActivityListAdaptor extends RecyclerView.Adapter<ActivityListAdapto
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
         Log.i("Anandu","setting text to "+activities.get(position).getName());
-        holder.textView.setText(activities.get(position).getName());
+        holder.binding.hobbyName.setText(activities.get(position).getName());
+        holder.binding.getRoot().setTag(position);
+        holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                contract.listItemClickCallback(v, (Integer)v.getTag());
+            }
+        });
     }
 
     @Override
