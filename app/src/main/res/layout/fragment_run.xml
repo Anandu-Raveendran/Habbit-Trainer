@@ -144,11 +144,20 @@
                     android:id="@+id/timerText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="30dp"
                     android:text="01:09:00"
                     android:textSize="70sp"
                     app:layout_constraintBottom_toTopOf="@+id/progress_bar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/repetitions" />
+
+                <TextView
+                    android:id="@+id/repetitions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="3 reps left"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/runningActivityName" />
@@ -173,7 +182,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/next_activity_name_text2"
+                    android:id="@+id/next_activity_name_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
@@ -181,12 +190,12 @@
                     android:layout_marginBottom="10dp"
                     android:text="Previous activity name"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/next_activity_time_text2"
+                    app:layout_constraintEnd_toStartOf="@+id/next_activity_time_text"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/next_activity_time_text2"
+                    android:id="@+id/next_activity_time_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
