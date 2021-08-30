@@ -160,8 +160,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
-        android:background="#E3D0D0"
         app:layout_constraintBottom_toTopOf="@+id/add_activity_btn"
         app:layout_constraintEnd_toEndOf="@+id/routineNameTextView"
         app:layout_constraintHorizontal_bias="1.0"
@@ -170,35 +168,55 @@
 
     <Button
         android:id="@+id/save_btn"
-        android:layout_width="136dp"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginEnd="16dp"
         android:text="save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/add_activity_btn" />
+        app:layout_constraintStart_toEndOf="@+id/play_btn2" />
 
     <Button
         android:id="@+id/cancel_btn"
-        android:layout_width="135dp"
+        style="@style/Widget.MaterialComponents.TimePicker.Button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="5dp"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/add_activity_btn"
+        app:layout_constraintEnd_toStartOf="@+id/play_btn2"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/add_activity_btn"
-        android:layout_width="136dp"
+        android:id="@+id/play_btn2"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Add activity"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="Play"
+        app:cornerRadius="16dp"
+        app:icon="@android:drawable/ic_media_play"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/save_btn"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/cancel_btn" />
+
+    <Button
+        android:id="@+id/add_activity_btn"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:text="+  Add activity"
+        android:textAlignment="center"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        app:layout_constraintBottom_toTopOf="@+id/cancel_btn"
+        app:layout_constraintEnd_toEndOf="@+id/activities_list_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/activities_list_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>

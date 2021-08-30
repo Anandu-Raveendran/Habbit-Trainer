@@ -118,7 +118,18 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
         binding.cancelBtn.setOnClickListener(v ->
                 Navigation.findNavController(view)
                         .navigate(EditFragmentDirections.actionEditFragmentToFirstFragment()));
-
+        binding.playBtn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (hobby.getHobbyActivities().isEmpty()){
+                 Toast.makeText(getContext(),"Activity list is empty.",Toast.LENGTH_SHORT).show();
+                 Log.i("Anandu","Play button pressed. Activity list is empty");
+                } else {
+                    Navigation.findNavController(view)
+                            .navigate(EditFragmentDirections.actionEditFragmentToRunFragment().setHobby(hobby));
+                }
+            }
+        });
 
         return view;
     }
@@ -162,7 +173,8 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
                     hobby.getHobbyActivities().add(activtyIndex,activity);
                     toastMessage += "Activity updated successfully";
                 }
-                Log.i("Anandu","activity saved as "+activity);
+                Toast.makeText(getContext(),toastMessage,Toast.LENGTH_SHORT).show();
+                Log.i("Anandu","dialog saveBtn "+toastMessage);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
