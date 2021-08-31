@@ -54,12 +54,19 @@ public class ActivityListAdaptor extends RecyclerView.Adapter<ActivityListAdapto
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
         Log.i("Anandu","setting text to "+activities.get(position).getName());
-        holder.binding.hobbyName.setText(activities.get(position).getName());
+        holder.binding.activityNameText.setText(activities.get(position).getName());
+        holder.binding.itemTimeText.setText(activities.get(position).getTimeNeeded().toString());
         holder.binding.getRoot().setTag(position);
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 contract.listItemClickCallback(v, (Integer)v.getTag());
+            }
+        });
+        holder.binding.deleteItemBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                contract.deleteItem(v, (Integer)v.getTag());
             }
         });
     }

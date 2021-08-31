@@ -213,4 +213,14 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
         initActivityDialogBox(hobby, position);
     }
 
+    @Override
+    public void deleteItem(View v, Integer tag) {
+        hobby.getHobbyActivities().remove(tag);
+        binding.activitiesListView.getAdapter().notifyDataSetChanged();
+    }
+
+    //There is no play for activities so need not implement this method.
+    @Override
+    public void playItem(View v, Integer tag) {}
+
 }

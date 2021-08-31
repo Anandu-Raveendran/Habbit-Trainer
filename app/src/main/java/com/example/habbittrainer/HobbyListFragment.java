@@ -21,7 +21,7 @@ import com.example.habbittrainer.models.HobbyActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirstFragment extends Fragment implements ListItemCallbackContract{
+public class HobbyListFragment extends Fragment implements ListItemCallbackContract{
 
     private FragmentFirstBinding binding;
 
@@ -52,7 +52,7 @@ public class FirstFragment extends Fragment implements ListItemCallbackContract{
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.HobbyListView.setLayoutManager(layoutManager);
 
-        FirstFragmentArgs args = FirstFragmentArgs.fromBundle(getArguments());
+        HobbyListFragmentArgs args = HobbyListFragmentArgs.fromBundle(getArguments());
         if(args != null)
             if(args.getHobby() != null) {
                 //If editIndex is same as hobby size its cause this is a newly created object not yet in list
@@ -76,7 +76,7 @@ public class FirstFragment extends Fragment implements ListItemCallbackContract{
 
                 //Edit index is set to hobby size so that a new object is created.
                 Navigation.findNavController(view).
-                        navigate(FirstFragmentDirections.actionFirstFragmentToEditFragment()
+                        navigate(HobbyListFragmentDirections.actionFirstFragmentToEditFragment()
                                 .setHobby(new Hobby()).setEditIndex(hobbies.size()));
 
             }
@@ -102,7 +102,20 @@ public class FirstFragment extends Fragment implements ListItemCallbackContract{
     public void listItemClickCallback(View v, int position) {
         //Edit index is set to hobby size so that a new object is created.
         Navigation.findNavController(v).
-                navigate(FirstFragmentDirections.actionFirstFragmentToEditFragment()
+                navigate(HobbyListFragmentDirections.actionFirstFragmentToEditFragment()
                         .setHobby(hobbies.get(position)).setEditIndex(position));
+    }
+
+    @Override
+    public void deleteItem(View v, Integer tag) {
+        hobbies.remove(tag);
+        binding.HobbyListView.getAdapter().notifyDataSetChanged();
+    }
+
+    @Override
+    public void playItem(View v, Integer tag) {
+        Navigation.findNavController(v).
+                navigate(HobbyListFragmentDirections.actionFirstFragmentToRunFragment()
+                        .setHobby(hobbies.get(tag)));
     }
 }

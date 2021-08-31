@@ -3,6 +3,7 @@ package com.example.habbittrainer;
 import android.text.Editable;
 import android.text.TextWatcher;
 
+import java.sql.Time;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -103,6 +104,11 @@ public class MyTimeTextWatcher implements TextWatcher {
         // Return if the time
         // matched the ReGex
         return m.matches();
+    }
+
+
+    public static long timeToMillis(Time time){
+        return (time.getHours() * 60 * 60 * 1000)+ (time.getMinutes() * 60 * 1000)+ (time.getSeconds()*1000) ;
     }
 
 }

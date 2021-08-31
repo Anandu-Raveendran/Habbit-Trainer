@@ -53,13 +53,28 @@ public class HobbyListAdaptor extends RecyclerView.Adapter<HobbyListAdaptor.MyVi
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyViewHolder holder, int position) {
         Log.i("Anandu","setting text to "+ hobbies.get(position).getName());
-        holder.hobbyListViewBinding.hobbyName.setText(hobbies.get(position).getName());
+        holder.hobbyListViewBinding.hobbyNameText.setText(hobbies.get(position).getName());
+        holder.hobbyListViewBinding.timeText.setText(hobbies.get(position).getScheduledTime().toString());
         holder.hobbyListViewBinding.getRoot().setTag(position);
         holder.hobbyListViewBinding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i("Anandu","Clicked "+v.getTag());
                 callbackContract.listItemClickCallback(v, (Integer)v.getTag());
+            }
+        });
+        holder.hobbyListViewBinding.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("Anandu","Delete Clicked "+v.getTag());
+                callbackContract.deleteItem(v,(Integer)v.getTag());
+            }
+        });
+        holder.hobbyListViewBinding.playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("Anandu","Play Clicked "+v.getTag());
+                callbackContract.playItem(v,(Integer)v.getTag());
             }
         });
     }

@@ -155,7 +155,7 @@ public class RunFragment extends Fragment {
             currentActivity_index++;
             myState = CurrentState.inActivity;
             Time time = activities.get(currentActivity_index).getTimeNeeded();
-            startTime = timeInMillis =  (time.getHours() * 60 * 60 * 1000)+ (time.getMinutes() * 60 * 1000)+ (time.getSeconds()*1000) ;
+            startTime = timeInMillis =  MyTimeTextWatcher.timeToMillis(time);
             currentRepetition =  activities.get(currentActivity_index).getRepetitions();
             currentRepetition--;
             Log.i("Anandu","time from hobby hours"+time.getHours()+" mins "+ time.getMinutes() +"seconds"+time.getSeconds()+" mills "+timeInMillis);
@@ -218,7 +218,7 @@ public class RunFragment extends Fragment {
             binding.runningActivityName.setText("Final break: "+activities.get(currentActivity_index).getName());
             myState = CurrentState.inEndBreak;
         }
-        startTime = timeInMillis =  (time.getHours() * 60 * 60 * 1000)+ (time.getMinutes() * 60 * 1000)+ (time.getSeconds()*1000) ;
+        startTime = timeInMillis = MyTimeTextWatcher.timeToMillis(time);
         Log.i("Anandu","state "+myState+" time from hobby hours"+time.getHours()+" mins "+ time.getMinutes() +"seconds"+time.getSeconds()+" mills "+timeInMillis);
         //updateUI();
 
