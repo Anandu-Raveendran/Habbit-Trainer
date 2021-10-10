@@ -109,6 +109,7 @@ public class HobbyListFragment extends Fragment implements ListItemCallbackContr
     @Override
     public void deleteItem(View v, Integer tag) {
         hobbies.remove(tag);
+        MainActivity.hobbyList.remove(tag);
         binding.HobbyListView.getAdapter().notifyDataSetChanged();
     }
 

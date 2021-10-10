@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/HobbyListFragment"
         android:name="com.example.habbittrainer.HobbyListFragment"
-        android:label="@string/first_fragment_label"
+        android:label="Hobby List"
         tools:layout="@layout/fragment_first">
 
         <action
@@ -16,13 +16,13 @@
             app:destination="@id/editFragment" />
         <argument
             android:name="hobby"
+            android:defaultValue="@null"
             app:argType="com.example.habbittrainer.models.Hobby"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
         <argument
             android:name="edit_index"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/action_FirstFragment_to_runFragment"
             app:destination="@id/runFragment" />
@@ -30,20 +30,20 @@
     <fragment
         android:id="@+id/editFragment"
         android:name="com.example.habbittrainer.EditFragment"
-        android:label="edit_fragment"
-        tools:layout="@layout/edit_fragment" >
+        android:label="Hobby Details"
+        tools:layout="@layout/edit_fragment">
         <action
             android:id="@+id/action_editFragment_to_FirstFragment"
             app:destination="@id/HobbyListFragment" />
         <argument
             android:name="hobby"
+            android:defaultValue="@null"
             app:argType="com.example.habbittrainer.models.Hobby"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
         <argument
             android:name="edit_index"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/action_editFragment_to_runFragment"
             app:destination="@id/runFragment" />
@@ -51,12 +51,12 @@
     <fragment
         android:id="@+id/runFragment"
         android:name="com.example.habbittrainer.RunFragment"
-        android:label="fragment_run"
-        tools:layout="@layout/fragment_run" >
+        android:label="Activity Player"
+        tools:layout="@layout/fragment_run">
         <argument
             android:name="hobby"
+            android:defaultValue="@null"
             app:argType="com.example.habbittrainer.models.Hobby"
-            app:nullable="true"
-            android:defaultValue="@null" />
+            app:nullable="true" />
     </fragment>
 </navigation>

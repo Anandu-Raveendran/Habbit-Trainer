@@ -56,6 +56,8 @@ public class HobbyListAdaptor extends RecyclerView.Adapter<HobbyListAdaptor.MyVi
         holder.hobbyListViewBinding.hobbyNameText.setText(hobbies.get(position).getName());
         holder.hobbyListViewBinding.timeText.setText(hobbies.get(position).getScheduledTime().toString());
         holder.hobbyListViewBinding.getRoot().setTag(position);
+        holder.hobbyListViewBinding.playButton.setTag(position);
+        holder.hobbyListViewBinding.deleteBtn.setTag(position);
         holder.hobbyListViewBinding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -57,6 +57,7 @@ public class ActivityListAdaptor extends RecyclerView.Adapter<ActivityListAdapto
         holder.binding.activityNameText.setText(activities.get(position).getName());
         holder.binding.itemTimeText.setText(activities.get(position).getTimeNeeded().toString());
         holder.binding.getRoot().setTag(position);
+        holder.binding.deleteItemBtn.setTag(position);
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
