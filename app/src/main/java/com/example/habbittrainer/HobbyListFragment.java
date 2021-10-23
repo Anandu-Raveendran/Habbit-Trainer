@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -114,9 +115,13 @@ public class HobbyListFragment extends Fragment implements ListItemCallbackContr
     }
 
     @Override
-    public void playItem(View v, Integer tag) {
-        Navigation.findNavController(v).
-                navigate(HobbyListFragmentDirections.actionFirstFragmentToRunFragment()
-                        .setHobby(hobbies.get(tag)));
+    public void playItem(View v, Integer tag) { // callback from list item click
+        if(hobbies.get(tag).getHobbyActivities().size() < 1) {
+            Toast.makeText(getContext(),"No activities in the Hobby",Toast.LENGTH_SHORT).show();
+        } else {
+            Navigation.findNavController(v).
+                    navigate(HobbyListFragmentDirections.actionFirstFragmentToRunFragment()
+                            .setHobby(hobbies.get(tag)));
+        }
     }
 }

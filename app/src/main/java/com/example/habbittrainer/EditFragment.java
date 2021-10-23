@@ -27,14 +27,16 @@ import com.example.habbittrainer.models.HobbyActivity;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class EditFragment extends Fragment implements ListItemCallbackContract {
 
     private EditViewModel mViewModel;
     private Hobby hobby;
     private EditFragmentBinding binding;
-    private int edit_index=-1;
+    private int edit_index = -1;
     private ViewGroup parent;
+    private ActivityListAdaptor adaptor;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -48,7 +50,7 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
         Log.i("ANANDU", hobby.toString());
         if (hobby == null) {
             hobby = new Hobby();
-        } else{
+        } else {
             binding.routineNameTextView.setText(hobby.getName());
             binding.scheduledTimeTextView.setText(hobby.getScheduledTime().toString());
             binding.sunday.setChecked(hobby.getDays()[Days.SUNDAY.getIntValue()]);
@@ -63,14 +65,15 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
         mViewModel = new ViewModelProvider(this).get(EditViewModel.class);
         mViewModel.setHobby(hobby);
 
-        binding.activitiesListView.setAdapter(new ActivityListAdaptor(hobby.getHobbyActivities(),this));
+        adaptor = new ActivityListAdaptor(hobby.getHobbyActivities(), this);
+        binding.activitiesListView.setAdapter(adaptor);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.activitiesListView.setLayoutManager(layoutManager);
 
         //set the time formatter on text input
         binding.scheduledTimeTextView.addTextChangedListener(new MyTimeTextWatcher());
         binding.addActivityBtn.setOnClickListener(v -> {
-            initActivityDialogBox(hobby,-1);
+            initActivityDialogBox(hobby, -1);
         });
 
         binding.saveBtn.setOnClickListener(v -> {
@@ -92,8 +95,12 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
 
                 try {
                     SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-                    hobby.setName(binding.routineNameTextView.getText().toString());
-                    if(MyTimeTextWatcher.isValidTime(binding.scheduledTimeTextView.getText().toString())) {
+                    if (binding.routineNameTextView.getText().toString().isEmpty()) {
+                        toastMessage = "Please add name to Hobby";
+                    } else if (!MyTimeTextWatcher.isValidTime(binding.scheduledTimeTextView.getText().toString())) {
+                        toastMessage = "Invalid Schedule time";
+                    } else {
+                        hobby.setName(binding.routineNameTextView.getText().toString());
                         hobby.setScheduledTime(new Time(sdf.parse(binding.scheduledTimeTextView.getText().toString()).getTime()));
                         hobby.setDays(days);
                         hobby.setEnableReminder(binding.reminderSwitch.isChecked());
@@ -103,8 +110,6 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
                         Navigation.findNavController(view)
                                 .navigate(EditFragmentDirections.actionEditFragmentToFirstFragment().setHobby(hobby)
                                         .setEditIndex(edit_index));
-                    } else {
-                        toastMessage = "Invalid Schedule time";
                     }
                 } catch (ParseException e) {
                     toastMessage = "!!! Data Error: data not saved !!!";
@@ -121,9 +126,9 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
         binding.playBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (hobby.getHobbyActivities().isEmpty()){
-                 Toast.makeText(getContext(),"Activity list is empty.",Toast.LENGTH_SHORT).show();
-                 Log.i("Anandu","Play button pressed. Activity list is empty");
+                if (hobby.getHobbyActivities().isEmpty()) {
+                    Toast.makeText(getContext(), "Activity list is empty.", Toast.LENGTH_SHORT).show();
+                    Log.i("Anandu", "Play button pressed. Activity list is empty");
                 } else {
                     Navigation.findNavController(view)
                             .navigate(EditFragmentDirections.actionEditFragmentToRunFragment().setHobby(hobby));
@@ -140,7 +145,7 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
         AddHobbyActivityBinding dialogBinding = AddHobbyActivityBinding.inflate(layoutInflater, parent, false);
         builder.setView(dialogBinding.getRoot());
 
-        if(activtyIndex != -1) {
+        if (activtyIndex != -1) {
             dialogBinding.activityNameTextView.setText(hobby.getHobbyActivities().get(activtyIndex).getName());
             dialogBinding.breaksTextView.setText(hobby.getHobbyActivities().get(activtyIndex).getBreakLength().toString());
             dialogBinding.breakAfterText.setText(hobby.getHobbyActivities().get(activtyIndex).getBreakAfterActivity().toString());
@@ -152,29 +157,45 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
             SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
             String toastMessage = "";
             try {
-                HobbyActivity activity = new HobbyActivity(
-                        dialogBinding.activityNameTextView.getText().toString(),
-                        new Time(sdf.parse(dialogBinding.activityTimeTextView.getText().toString()).getTime()),
-                        Integer.parseInt(dialogBinding.repetitionTextView.getText().toString()),
-                        new Time(sdf.parse(dialogBinding.breaksTextView.getText().toString()).getTime()),
-                        new Time(sdf.parse(dialogBinding.breakAfterText.getText().toString()).getTime()));
-
-                if(!MyTimeTextWatcher.isValidTime(dialogBinding.activityTimeTextView.getText().toString())){
-                    toastMessage += "Invalid activity time";
-                } else if(!MyTimeTextWatcher.isValidTime(dialogBinding.breakAfterText.getText().toString())){
-                    toastMessage += "Invalid break time";
-                } else if(!MyTimeTextWatcher.isValidTime(dialogBinding.breaksTextView.getText().toString())){
-                    toastMessage += "Invalid 'break after' time";
-                } else if(activtyIndex == -1) {
-                    hobby.getHobbyActivities().add(activity);
-                    toastMessage += "Activity added successfully";
+                if (dialogBinding.activityNameTextView.getText().toString().isEmpty()) {
+                    toastMessage += " Add a name to Activity";
+                } else if (!MyTimeTextWatcher.isValidTime(dialogBinding.activityTimeTextView.getText().toString())) {
+                    toastMessage += " Invalid activity time";
+                } else if (!(dialogBinding.breakAfterText.getText().toString().isEmpty())
+                        && (!MyTimeTextWatcher.isValidTime(dialogBinding.breakAfterText.getText().toString()))) {
+                    toastMessage += " Invalid Break after time";
+                } else if ((!dialogBinding.breaksTextView.getText().toString().isEmpty())
+                        && (!MyTimeTextWatcher.isValidTime(dialogBinding.breaksTextView.getText().toString()))) {
+                    toastMessage += " Invalid Breaks time";
                 } else {
-                    hobby.getHobbyActivities().remove(activtyIndex);
-                    hobby.getHobbyActivities().add(activtyIndex,activity);
-                    toastMessage += "Activity updated successfully";
+                    if (dialogBinding.breakAfterText.getText().toString().isEmpty()) {
+                        dialogBinding.breakAfterText.setText("00:00:00");
+                    }
+                    if (dialogBinding.breaksTextView.getText().toString().isEmpty()) {
+                        dialogBinding.breaksTextView.setText("00:00:00");
+                    }
+                    if (dialogBinding.repetitionTextView.getText().toString().isEmpty()) {
+                        dialogBinding.repetitionTextView.setText("1");
+                    }
+                    HobbyActivity activity = new HobbyActivity(
+                            dialogBinding.activityNameTextView.getText().toString(),
+                            new Time(sdf.parse(dialogBinding.activityTimeTextView.getText().toString()).getTime()),
+                            Integer.parseInt(dialogBinding.repetitionTextView.getText().toString()),
+                            new Time(sdf.parse(dialogBinding.breaksTextView.getText().toString()).getTime()),
+                            new Time(sdf.parse(dialogBinding.breakAfterText.getText().toString()).getTime()));
+
+                    if (activtyIndex == -1) {   // Add new activity case (insert)
+                        hobby.getHobbyActivities().add(activity);
+                        toastMessage += "Activity added successfully";
+                    } else {   // update case (not new activity)
+                        hobby.getHobbyActivities().remove(activtyIndex);
+                        hobby.getHobbyActivities().add(activtyIndex, activity);
+                        toastMessage += "Activity updated successfully";
+                    }
                 }
-                Toast.makeText(getContext(),toastMessage,Toast.LENGTH_SHORT).show();
-                Log.i("Anandu","dialog saveBtn "+toastMessage);
+                if (!toastMessage.isEmpty())
+                    Toast.makeText(getContext(), toastMessage, Toast.LENGTH_SHORT).show();
+                Log.i("Anandu", "dialog saveBtn " + toastMessage);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -209,6 +230,12 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        adaptor.notifyDataSetChanged();
+    }
+
+    @Override
     public void listItemClickCallback(View v, int position) {
         initActivityDialogBox(hobby, position);
     }
@@ -221,6 +248,7 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
 
     //There is no play for activities so need not implement this method.
     @Override
-    public void playItem(View v, Integer tag) {}
+    public void playItem(View v, Integer tag) {
+    }
 
 }

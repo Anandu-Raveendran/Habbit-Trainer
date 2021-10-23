@@ -17,11 +17,12 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
             android:clickable="true"
-            android:src="@android:drawable/ic_media_pause"
+            android:src="@drawable/ic_baseline_play_arrow_24"
             app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="@+id/main_card"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/exit_btn"
@@ -33,7 +34,8 @@
             android:src="@android:drawable/ic_menu_close_clear_cancel"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="@+id/main_card"
-            app:layout_constraintEnd_toStartOf="@+id/play_pause_btn" />
+            app:layout_constraintEnd_toStartOf="@+id/play_pause_btn"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/next_btn"
@@ -45,7 +47,8 @@
             android:src="@android:drawable/ic_media_next"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="@+id/main_card"
-            app:layout_constraintStart_toEndOf="@+id/play_pause_btn" />
+            app:layout_constraintStart_toEndOf="@+id/play_pause_btn"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/top_card"
