@@ -22,8 +22,6 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Gradle Build
-        run: ./gradlew build
       - name: Run Lint
         run: ./gradlew lintdebug
       - name: upload lint report
@@ -55,5 +53,20 @@ jobs:
           name: unit_test_report
           path: app/build/report/tests/testDebugUnitTest/
 
+  build:
+    runs-on: ubuntu-latest
 
+    steps:
+      - uses: actions/checkout@v2
+      - name: set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Gradle Build
+        run: ./gradlew build
 
