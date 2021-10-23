@@ -7,7 +7,7 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  gradle-setup:
 
     runs-on: ubuntu-latest
 
@@ -22,5 +22,29 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Build with Gradle
+
+
+
+  lint:
+    needs: : [gradle-setup]
       run: ./gradlew build
+    - name :Run Lint
+      run: ./gradlew lintdebug
+    - name: upload lint report
+      uses: actions/upload-artifact@v2
+      with:
+        name: lint.html
+        path: app/build/reports/lint-results-debug.html
+
+  unit-test:
+    needs: [lint]
+    runs-on: ubuntu-latest
+    steps:
+      -name: Run unit tests
+      run: gradlew test
+
+      -name: Upload test report
+      uses: actions/upload-artifact@v2
+      with:
+        name: unit_test_report
+        path: app/build/report/tests/testDebugUnitTest/
