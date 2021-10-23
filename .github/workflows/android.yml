@@ -37,10 +37,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run unit tests
-      run: gradlew test
+        run: gradlew test
 
       - name: Upload test report
-      uses: actions/upload-artifact@v2
-      with:
-        name: unit_test_report
-        path: app/build/report/tests/testDebugUnitTest/
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit_test_report
+          path: app/build/report/tests/testDebugUnitTest/
