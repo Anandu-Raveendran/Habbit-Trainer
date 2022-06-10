@@ -22,7 +22,7 @@ import com.example.habbittrainer.models.HobbyActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HobbyListFragment extends Fragment implements ListItemCallbackContract{
+public class HobbyListFragment extends Fragment implements ListItemCallbackContract {
 
     private FragmentFirstBinding binding;
 
@@ -42,26 +42,26 @@ public class HobbyListFragment extends Fragment implements ListItemCallbackContr
 //        h.setHobbyActivities(newActivities);
 
         hobbies = DataSource.readHobbies(getContext());
-        if(hobbies == null) {
-            Log.i("Anandu","data source returned null");
+        if (hobbies == null) {
+            Log.i("Anandu", "data source returned null");
             hobbies = new ArrayList<>();
         } else
-            Log.i("Anandu","Data source list is not null");
+            Log.i("Anandu", "Data source list is not null");
         MainActivity.hobbyList = hobbies;
 
-        binding.HobbyListView.setAdapter(new HobbyListAdaptor(hobbies, this));
+        binding.HobbyListView.setAdapter(new HobbyListAdaptor(getContext(), hobbies, this));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.HobbyListView.setLayoutManager(layoutManager);
 
         HobbyListFragmentArgs args = HobbyListFragmentArgs.fromBundle(getArguments());
-        if(args != null)
-            if(args.getHobby() != null) {
+        if (args != null)
+            if (args.getHobby() != null) {
                 //If editIndex is same as hobby size its cause this is a newly created object not yet in list
-                if((args.getEditIndex() != hobbies.size()) && (hobbies.size() > 0)) {
+                if ((args.getEditIndex() != hobbies.size()) && (hobbies.size() > 0)) {
                     hobbies.remove(args.getEditIndex());
                 }
                 hobbies.add(indexForEditFrag, args.getHobby());
-                DataSource.write(getContext(),hobbies);
+                DataSource.write(getContext(), hobbies);
                 binding.HobbyListView.getAdapter().notifyDataSetChanged();
             }
 
@@ -83,7 +83,6 @@ public class HobbyListFragment extends Fragment implements ListItemCallbackContr
             }
         });
     }
-
 
 
     @Override
@@ -116,8 +115,8 @@ public class HobbyListFragment extends Fragment implements ListItemCallbackContr
 
     @Override
     public void playItem(View v, Integer tag) { // callback from list item click
-        if(hobbies.get(tag).getHobbyActivities().size() < 1) {
-            Toast.makeText(getContext(),"No activities in the Hobby",Toast.LENGTH_SHORT).show();
+        if (hobbies.get(tag).getHobbyActivities().size() < 1) {
+            Toast.makeText(getContext(), "No activities in the Hobby", Toast.LENGTH_SHORT).show();
         } else {
             Navigation.findNavController(v).
                     navigate(HobbyListFragmentDirections.actionFirstFragmentToRunFragment()

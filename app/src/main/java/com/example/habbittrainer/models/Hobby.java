@@ -12,13 +12,15 @@ public class Hobby implements Serializable {
     private boolean[] days = new boolean[7];
     private boolean enableReminder = false;
     private List<HobbyActivity> hobbyActivities;
+    private int scoreStreak;
 
-    public Hobby(String name, Time scheduledTime, boolean[] days, boolean enableReminder) {
+    public Hobby(String name, Time scheduledTime, boolean[] days, boolean enableReminder, int scoreStreak) {
         this.name = name;
         this.scheduledTime = scheduledTime;
         this.days = days;
         this.enableReminder = enableReminder;
         this.hobbyActivities = new ArrayList<>();
+        this.scoreStreak = scoreStreak;
     }
 
     public Hobby(String name) {
@@ -70,6 +72,14 @@ public class Hobby implements Serializable {
         this.hobbyActivities = hobbyActivities;
     }
 
+    public int getScoreStreak() {
+        return scoreStreak;
+    }
+
+    public void setScoreStreak(int scoreStreak) {
+        this.scoreStreak = scoreStreak;
+    }
+
     @Override
     public String toString() {
         return "Hobby{" +
@@ -78,6 +88,7 @@ public class Hobby implements Serializable {
                 ", days=" + Arrays.toString(days) +
                 ", enableReminder=" + enableReminder +
                 ", hobbyActivities=" + hobbyActivities +
+                ", scoreStreak=" + scoreStreak +
                 '}';
     }
 }
