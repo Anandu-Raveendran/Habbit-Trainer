@@ -1,7 +1,6 @@
-package com.example.habbittrainer;
+package com.example.habbittrainer.Adaptors;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.habbittrainer.interfaces.ListItemCallbackContract;
+import com.example.habbittrainer.R;
 import com.example.habbittrainer.databinding.HobbyListViewBinding;
 import com.example.habbittrainer.models.Hobby;
 

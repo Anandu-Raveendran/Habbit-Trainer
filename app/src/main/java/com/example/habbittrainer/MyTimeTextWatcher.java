@@ -85,7 +85,7 @@ public class MyTimeTextWatcher implements TextWatcher {
     {
 
         // Regex to check valid time in 24-hour format.
-        String regex = "([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]";
+        String regex = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
 
         // Compile the ReGex
         Pattern p = Pattern.compile(regex);

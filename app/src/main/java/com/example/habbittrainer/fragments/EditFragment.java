@@ -1,4 +1,4 @@
-package com.example.habbittrainer;
+package com.example.habbittrainer.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -17,6 +17,9 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.habbittrainer.Adaptors.ActivityListAdaptor;
+import com.example.habbittrainer.interfaces.ListItemCallbackContract;
+import com.example.habbittrainer.MyTimeTextWatcher;
 import com.example.habbittrainer.databinding.AddHobbyActivityBinding;
 import com.example.habbittrainer.databinding.EditFragmentBinding;
 import com.example.habbittrainer.models.Days;
@@ -27,7 +30,6 @@ import com.example.habbittrainer.models.HobbyActivity;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class EditFragment extends Fragment implements ListItemCallbackContract {
 
@@ -65,7 +67,7 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
         mViewModel = new ViewModelProvider(this).get(EditViewModel.class);
         mViewModel.setHobby(hobby);
 
-        adaptor = new ActivityListAdaptor(hobby.getHobbyActivities(), this);
+        adaptor = new ActivityListAdaptor(getContext(), hobby.getHobbyActivities(), this);
         binding.activitiesListView.setAdapter(adaptor);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.activitiesListView.setLayoutManager(layoutManager);
@@ -94,7 +96,7 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
                 days[Days.SATURDAY.getIntValue()] = binding.saturday.isChecked();
 
                 try {
-                    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+                    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
                     if (binding.routineNameTextView.getText().toString().isEmpty()) {
                         toastMessage = "Please add name to Hobby";
                     } else if (!MyTimeTextWatcher.isValidTime(binding.scheduledTimeTextView.getText().toString())) {
@@ -154,7 +156,7 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
         }
 
         builder.setPositiveButton("Save", (dialog, which) -> {
-            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm");
             String toastMessage = "";
             try {
                 if (dialogBinding.activityNameTextView.getText().toString().isEmpty()) {
@@ -169,10 +171,10 @@ public class EditFragment extends Fragment implements ListItemCallbackContract {
                     toastMessage += " Invalid Breaks time";
                 } else {
                     if (dialogBinding.breakAfterText.getText().toString().isEmpty()) {
-                        dialogBinding.breakAfterText.setText("00:00:00");
+                        dialogBinding.breakAfterText.setText("00:00");
                     }
                     if (dialogBinding.breaksTextView.getText().toString().isEmpty()) {
-                        dialogBinding.breaksTextView.setText("00:00:00");
+                        dialogBinding.breaksTextView.setText("00:00");
                     }
                     if (dialogBinding.repetitionTextView.getText().toString().isEmpty()) {
                         dialogBinding.repetitionTextView.setText("1");

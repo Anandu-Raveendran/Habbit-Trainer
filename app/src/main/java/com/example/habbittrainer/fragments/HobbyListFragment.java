@@ -1,4 +1,4 @@
-package com.example.habbittrainer;
+package com.example.habbittrainer.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,15 +9,16 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.habbittrainer.Adaptors.HobbyListAdaptor;
+import com.example.habbittrainer.DataSource;
+import com.example.habbittrainer.interfaces.ListItemCallbackContract;
+import com.example.habbittrainer.activities.MainActivity;
 import com.example.habbittrainer.databinding.FragmentFirstBinding;
 import com.example.habbittrainer.models.Hobby;
-import com.example.habbittrainer.models.HobbyActivity;
 
 import java.util.ArrayList;
 import java.util.List;

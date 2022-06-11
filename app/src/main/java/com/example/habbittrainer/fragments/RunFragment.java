@@ -1,4 +1,4 @@
-package com.example.habbittrainer;
+package com.example.habbittrainer.fragments;
 
 import static java.lang.System.exit;
 
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.example.habbittrainer.MyTimeTextWatcher;
+import com.example.habbittrainer.R;
 import com.example.habbittrainer.databinding.FragmentRunBinding;
 import com.example.habbittrainer.models.Hobby;
 import com.example.habbittrainer.models.HobbyActivity;

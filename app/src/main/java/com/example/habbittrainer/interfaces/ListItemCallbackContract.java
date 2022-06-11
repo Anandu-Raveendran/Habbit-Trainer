@@ -1,4 +1,4 @@
-package com.example.habbittrainer;
+package com.example.habbittrainer.interfaces;
 
 import android.view.View;
 

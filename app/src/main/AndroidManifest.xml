@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HabbitTrainer">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.HabbitTrainer.NoActionBar">
             <intent-filter>

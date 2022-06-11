@@ -14,4 +14,14 @@
     <color name="light_green">#F1F8E9</color>
     <color name="light_white">#ECEFF1</color>
     <color name="blue">#47B5FF</color>
+
+    <color name="bright_pink">#FF007F</color>
+    <color name="red">#FF0000</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="chartreuse">#7FFF00</color>
+    <color name="spring_green">#00FF7F</color>
+    <color name="cyan">#00FFFF</color>
+    <color name="azure">#007FFF</color>
+    <color name="violet">#7F00FF</color>
+    <color name="magenta">#FF00FF</color>
 </resources>
