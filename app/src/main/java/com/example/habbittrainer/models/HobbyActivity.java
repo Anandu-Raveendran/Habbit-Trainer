@@ -1,15 +1,22 @@
 package com.example.habbittrainer.models;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.io.Serializable;
 import java.sql.Time;
+import java.time.LocalTime;
+
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class HobbyActivity implements Serializable {
     private String name;
-    private Time timeNeeded = Time.valueOf("0:01:0");
+    private LocalTime timeNeeded = LocalTime.of(0, 0);
     private int repetitions = 1;
-    private Time breakLength = Time.valueOf("0:01:0");
-    private Time breakAfterActivity = Time.valueOf("0:01:0");
+    private LocalTime breakLength = LocalTime.of(0, 0);
+    private LocalTime breakAfterActivity = LocalTime.of(0, 0);
 
-    public HobbyActivity(String name, Time timeNeeded, int repetitions, Time breakLength, Time breakAfterActivity) {
+    public HobbyActivity(String name, LocalTime timeNeeded, int repetitions, LocalTime breakLength, LocalTime breakAfterActivity) {
         this.name = name;
         this.timeNeeded = timeNeeded;
         this.repetitions = repetitions;
@@ -29,11 +36,11 @@ public class HobbyActivity implements Serializable {
         this.name = name;
     }
 
-    public Time getTimeNeeded() {
+    public LocalTime getTimeNeeded() {
         return timeNeeded;
     }
 
-    public void setTimeNeeded(Time timeNeeded) {
+    public void setTimeNeeded(LocalTime timeNeeded) {
         this.timeNeeded = timeNeeded;
     }
 
@@ -45,19 +52,19 @@ public class HobbyActivity implements Serializable {
         this.repetitions = repetitions;
     }
 
-    public Time getBreakLength() {
+    public LocalTime getBreakLength() {
         return breakLength;
     }
 
-    public void setBreakLength(Time breakLength) {
+    public void setBreakLength(LocalTime breakLength) {
         this.breakLength = breakLength;
     }
 
-    public Time getBreakAfterActivity() {
+    public LocalTime getBreakAfterActivity() {
         return breakAfterActivity;
     }
 
-    public void setBreakAfterActivity(Time breakAfterActivity) {
+    public void setBreakAfterActivity(LocalTime breakAfterActivity) {
         this.breakAfterActivity = breakAfterActivity;
     }
 

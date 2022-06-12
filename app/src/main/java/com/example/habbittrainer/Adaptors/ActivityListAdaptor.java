@@ -71,12 +71,15 @@ public class ActivityListAdaptor extends RecyclerView.Adapter<ActivityListAdapto
         ViewGroup.LayoutParams params = holder.binding.durationView.getLayoutParams();
 
         // Change list item height
-        int mins = activities.get(position).getTimeNeeded().getMinutes();
-        int hours = activities.get(position).getTimeNeeded().getHours();
+        int mins = 0, hours = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            mins = activities.get(position).getTimeNeeded().getMinute();
+            hours = activities.get(position).getTimeNeeded().getHour();
+        }
         if (mins > 0)
             params.height = params.height + mins / 2;
         params.height = params.height + hours * 60;
-        if(params.height > 300)
+        if (params.height > 300)
             params.height = 300;
 
         holder.binding.durationView.setLayoutParams(params);

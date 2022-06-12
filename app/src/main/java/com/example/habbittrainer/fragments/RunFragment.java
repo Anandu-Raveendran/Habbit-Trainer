@@ -2,6 +2,7 @@ package com.example.habbittrainer.fragments;
 
 import static java.lang.System.exit;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -19,9 +21,11 @@ import com.example.habbittrainer.models.Hobby;
 import com.example.habbittrainer.models.HobbyActivity;
 
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Locale;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class RunFragment extends Fragment {
 
     private Hobby hobby;
@@ -158,14 +162,14 @@ public class RunFragment extends Fragment {
 
     private void nextActivity() {
         Log.i("Anandu", "Next timer " + (new Time(timeInMillis)).toString());
-        if (currentActivity_index < activities.size()-1) {
+        if (currentActivity_index < activities.size() - 1) {
             currentActivity_index++;
             myState = CurrentState.inActivity;
-            Time time = activities.get(currentActivity_index).getTimeNeeded();
+            LocalTime time = activities.get(currentActivity_index).getTimeNeeded();
             startTime = timeInMillis = MyTimeTextWatcher.timeToMillis(time);
             currentRepetition = activities.get(currentActivity_index).getRepetitions();
             currentRepetition--;
-            Log.i("Anandu", "time from hobby hours" + time.getHours() + " mins " + time.getMinutes() + "seconds" + time.getSeconds() + " mills " + timeInMillis);
+            Log.i("Anandu", "time from hobby hours" + time.getHour() + " mins " + time.getMinute() + "seconds" + time.getSecond() + " mills " + timeInMillis);
             updateUI();
             if (currentActivity_index != 0) // dont start first activity by self
                 startTimer();
@@ -201,7 +205,7 @@ public class RunFragment extends Fragment {
     }
 
     private void nextFlow() {
-        Time time;
+        LocalTime time;
         Log.i("Anandu", "curent rep " + currentRepetition + " state " + myState);
         //If more reps are there and it is in activity state
         if (currentRepetition > 0 && myState == CurrentState.inActivity) {
@@ -227,7 +231,7 @@ public class RunFragment extends Fragment {
             myState = CurrentState.inEndBreak;
         }
         startTime = timeInMillis = MyTimeTextWatcher.timeToMillis(time);
-        Log.i("Anandu", "state " + myState + " time from hobby hours" + time.getHours() + " mins " + time.getMinutes() + "seconds" + time.getSeconds() + " mills " + timeInMillis);
+        Log.i("Anandu", "state " + myState + " time from hobby hours" + time.getHour() + " mins " + time.getMinute() + "seconds" + time.getSecond() + " mills " + timeInMillis);
         //updateUI();
 
         startTimer();

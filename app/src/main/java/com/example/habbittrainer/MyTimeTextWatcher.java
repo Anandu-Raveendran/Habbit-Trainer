@@ -1,14 +1,20 @@
 package com.example.habbittrainer;
 
+import android.os.Build;
 import android.text.Editable;
 import android.text.TextWatcher;
 
-import java.sql.Time;
+import androidx.annotation.RequiresApi;
+
+import java.time.LocalTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
+
 public class MyTimeTextWatcher implements TextWatcher {
     boolean _ignore = false;
+
     @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -21,10 +27,10 @@ public class MyTimeTextWatcher implements TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        if(_ignore) {
+        if (_ignore) {
             return;
         }
-        if(s.length() > 0) {
+        if (s.length() > 0) {
             _ignore = true;
             //Check if first letter is less than digit 6
             if (Character.isDigit(s.charAt(0))) {
@@ -34,19 +40,19 @@ public class MyTimeTextWatcher implements TextWatcher {
             } else s.replace(0, 0, "0");
 
             // Check if 2nd is digit or : if : put 0 in front
-            if(s.length() > 1) {
+            if (s.length() > 1) {
                 if (Character.isDigit(s.charAt(1))) {
-                } else if(s.charAt(1) == ':'){
-                    s.insert(0,"0");
+                } else if (s.charAt(1) == ':') {
+                    s.insert(0, "0");
                 } else s.replace(1, 1, "0");
             }
             //Check if 3rd digit it a : else put it
-            if(s.length() > 2) {
+            if (s.length() > 2) {
                 if (s.charAt(2) == ':') {
                 } else s.replace(2, 2, ":");
             }
             //check if 4rth is a digit less than 6
-            if(s.length() > 3) {
+            if (s.length() > 3) {
                 if (Character.isDigit(s.charAt(3))) {
                     if (Integer.parseInt(s.subSequence(3, 4).toString()) > 6) {
                         s.replace(3, 3, "6");
@@ -54,17 +60,17 @@ public class MyTimeTextWatcher implements TextWatcher {
                 } else s.replace(3, 3, "0");
             }
             //check if 5th is a digit
-            if(s.length() > 4) {
+            if (s.length() > 4) {
                 if (Character.isDigit(s.charAt(4))) {
                 } else s.replace(4, 4, "0");
             }
             //Check if 3rd digit it a : else put it
-            if(s.length() > 5) {
+            if (s.length() > 5) {
                 if (s.charAt(5) == ':') {
                 } else s.replace(5, 5, ":");
             }
             //check if 4rth is a digit less than 6
-            if(s.length() > 6) {
+            if (s.length() > 6) {
                 if (Character.isDigit(s.charAt(6))) {
                     if (Integer.parseInt(s.subSequence(6, 7).toString()) > 6) {
                         s.replace(6, 6, "6");
@@ -72,7 +78,7 @@ public class MyTimeTextWatcher implements TextWatcher {
                 } else s.replace(6, 6, "0");
             }
             //check if 5th is a digit
-            if(s.length() > 7) {
+            if (s.length() > 7) {
                 if (Character.isDigit(s.charAt(7))) {
                 } else s.replace(7, 7, "0");
             }
@@ -81,8 +87,7 @@ public class MyTimeTextWatcher implements TextWatcher {
     }
 
     // Function to validate the time in 24-hour format
-    public static boolean isValidTime(String time)
-    {
+    public static boolean isValidTime(String time) {
 
         // Regex to check valid time in 24-hour format.
         String regex = "([01]?[0-9]|2[0-3]):[0-5][0-9]";
@@ -107,8 +112,10 @@ public class MyTimeTextWatcher implements TextWatcher {
     }
 
 
-    public static long timeToMillis(Time time){
-        return (time.getHours() * 60 * 60 * 1000)+ (time.getMinutes() * 60 * 1000)+ (time.getSeconds()*1000) ;
+    public static long timeToMillis(LocalTime time) {
+        return ((long) time.getHour() * 60 * 60 * 1000) +
+                ((long) time.getMinute() * 60 * 1000) +
+                (time.getSecond() * 1000L);
     }
 
 }

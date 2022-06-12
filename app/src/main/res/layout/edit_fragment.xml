@@ -19,144 +19,172 @@
         app:layout_constraintStart_toStartOf="@+id/textView11"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/shedulelayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Scheduled time  (24 hour) :"
-        android:textSize="18sp"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintStart_toStartOf="@+id/routineNameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/routineNameTextView" />
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reminder_switch">
 
-    <EditText
-        android:id="@+id/scheduled_time_text_view"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="HH:MM"
-        android:inputType="time"
-        android:maxLength="5"
-        android:minHeight="48dp"
-        android:textAlignment="textEnd"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView"
-        app:layout_constraintHorizontal_weight="4"
-        app:layout_constraintStart_toEndOf="@+id/textView" />
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Scheduled time  (24 hour) :"
+            android:textSize="18sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/scheduled_time_text_view"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/sunday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="S"
-        app:layout_constraintBaseline_toBaselineOf="@+id/monday"
-        app:layout_constraintEnd_toStartOf="@+id/monday"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/routineNameTextView" />
+        <EditText
+            android:id="@+id/scheduled_time_text_view"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="HH:MM"
+            android:inputType="time"
+            android:maxLength="5"
+            android:minHeight="48dp"
+            android:textAlignment="textEnd"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="4"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/monday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="M"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tuesday"
-        app:layout_constraintEnd_toStartOf="@+id/tuesday"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/sunday" />
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Repeat:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/tuesday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="T"
-        app:layout_constraintBaseline_toBaselineOf="@+id/wednesday"
-        app:layout_constraintEnd_toStartOf="@+id/wednesday"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/monday" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="S"
+            app:layout_constraintBaseline_toBaselineOf="@+id/monday"
+            app:layout_constraintEnd_toStartOf="@+id/monday"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/wednesday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="W"
-        app:layout_constraintBaseline_toBaselineOf="@+id/thursday"
-        app:layout_constraintEnd_toStartOf="@+id/thursday"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tuesday" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="M"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tuesday"
+            app:layout_constraintEnd_toStartOf="@+id/tuesday"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/sunday" />
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/thursday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="T"
-        app:layout_constraintBaseline_toBaselineOf="@+id/friday"
-        app:layout_constraintEnd_toStartOf="@+id/friday"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/wednesday" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="T"
+            app:layout_constraintBaseline_toBaselineOf="@+id/wednesday"
+            app:layout_constraintEnd_toStartOf="@+id/wednesday"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/monday" />
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/friday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="F"
-        app:layout_constraintBaseline_toBaselineOf="@+id/saturday"
-        app:layout_constraintEnd_toStartOf="@+id/saturday"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/thursday" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="W"
+            app:layout_constraintBaseline_toBaselineOf="@+id/thursday"
+            app:layout_constraintEnd_toStartOf="@+id/thursday"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tuesday" />
 
-    <com.google.android.material.chip.Chip
-        android:id="@+id/saturday"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:checkable="true"
-        android:clickable="true"
-        android:focusable="true"
+        <com.google.android.material.chip.Chip
+            android:id="@+id/thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="T"
+            app:layout_constraintBaseline_toBaselineOf="@+id/friday"
+            app:layout_constraintEnd_toStartOf="@+id/friday"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/wednesday" />
 
-        android:text="S"
-        app:layout_constraintEnd_toEndOf="@+id/play_btn2"
-        app:layout_constraintStart_toEndOf="@+id/friday"
-        app:layout_constraintTop_toBottomOf="@+id/textView13" />
+        <com.google.android.material.chip.Chip
+            android:id="@+id/friday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="F"
+            app:layout_constraintBaseline_toBaselineOf="@+id/saturday"
+            app:layout_constraintEnd_toStartOf="@+id/saturday"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/thursday" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/saturday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="5dp"
+            android:checkable="true"
+            android:clickable="true"
+
+            android:focusable="true"
+            android:text="S"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/friday"
+            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <Switch
         android:id="@+id/reminder_switch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         android:minHeight="48dp"
         android:text="Reminder "
-        app:layout_constraintEnd_toEndOf="@+id/saturday"
-        app:layout_constraintTop_toBottomOf="@+id/saturday" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/routineNameTextView" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activities_list_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
         android:background="#1DF8F2F2"
         android:minHeight="100dp"
         app:layout_constraintBottom_toTopOf="@+id/add_activity_btn"
-        app:layout_constraintEnd_toEndOf="@+id/reminder_switch"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.324"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/reminder_switch" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <ImageButton
         android:id="@+id/cancel_btn"
@@ -226,22 +254,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Repeat:"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="5dp"
         android:text="Sub Activities:"
-        app:layout_constraintBottom_toTopOf="@+id/activities_list_view"
-        app:layout_constraintStart_toStartOf="@+id/activities_list_view" />
+        app:layout_constraintStart_toStartOf="@+id/activities_list_view"
+        app:layout_constraintTop_toBottomOf="@+id/shedulelayout" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/save_btn"
