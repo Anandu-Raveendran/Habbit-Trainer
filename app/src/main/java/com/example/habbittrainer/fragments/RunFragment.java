@@ -118,7 +118,7 @@ public class RunFragment extends Fragment {
             binding.previousActivityNameText.setText(activities.get(currentActivity_index - 1).getTimeNeeded().toString());
         }
 
-        //Botton activity card
+        //Bottom activity card
         if (currentActivity_index + 1 >= activities.size()) {
             binding.nextActivityNameText.setVisibility(View.INVISIBLE);
             binding.nextActivityNameText.setEnabled(false);

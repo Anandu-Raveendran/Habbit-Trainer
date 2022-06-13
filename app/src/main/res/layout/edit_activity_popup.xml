@@ -15,18 +15,31 @@
         app:layout_constraintEnd_toStartOf="@+id/breakAfterText" />
 
     <EditText
-        android:id="@+id/activityTimeMinsTextView2"
+        android:id="@+id/activityTimeMinsTextView"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="MM"
         android:inputType="number|time"
         android:maxLength="2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView16"
+        app:layout_constraintEnd_toStartOf="@+id/textView20"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView16" />
+
+    <EditText
+        android:id="@+id/activityTimeSecTextView"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:hint="SS"
+        android:inputType="number|time"
+        android:maxLength="2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/activityNameTextView" />
+        app:layout_constraintStart_toEndOf="@+id/textView20" />
 
     <EditText
         android:id="@+id/activityNameTextView"
@@ -47,12 +60,10 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Time duration"
-        app:layout_constraintBottom_toBottomOf="@+id/textView17"
-        app:layout_constraintEnd_toStartOf="@+id/textView17"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView17" />
+        android:layout_marginTop="20dp"
+        android:text="Time duration:"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/activityNameTextView" />
 
     <EditText
         android:id="@+id/activityTimehourTextView"
@@ -62,11 +73,10 @@
         android:hint="HH"
         android:inputType="number|time"
         android:maxLength="2"
-        app:layout_constraintBottom_toBottomOf="@+id/textView16"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView17"
         app:layout_constraintEnd_toStartOf="@+id/textView16"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView17"
-        app:layout_constraintTop_toTopOf="@+id/textView16" />
+        app:layout_constraintStart_toEndOf="@+id/textView17" />
 
     <TextView
         android:id="@+id/textView3"
@@ -83,11 +93,12 @@
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         android:ems="10"
         android:hint="1"
         android:inputType="number"
         android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="@+id/activityTimeMinsTextView2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/activityTimehourTextView" />
 
     <TextView
@@ -163,15 +174,6 @@
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginTop="30dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/breakAfterText"></LinearLayout>
-
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
@@ -188,22 +190,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Minutes:"
-        app:layout_constraintBottom_toBottomOf="@+id/activityTimeMinsTextView2"
-        app:layout_constraintEnd_toStartOf="@+id/activityTimeMinsTextView2"
+        app:layout_constraintBaseline_toBaselineOf="@+id/activityTimehourTextView"
+        app:layout_constraintEnd_toStartOf="@+id/activityTimeMinsTextView"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/activityTimehourTextView"
-        app:layout_constraintTop_toTopOf="@+id/activityTimeMinsTextView2" />
+        app:layout_constraintStart_toEndOf="@+id/activityTimehourTextView" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seconds"
+        app:layout_constraintBaseline_toBaselineOf="@+id/activityTimeMinsTextView"
+        app:layout_constraintEnd_toStartOf="@+id/activityTimeSecTextView"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/activityTimeMinsTextView" />
 
     <TextView
         android:id="@+id/textView17"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:text="Hours:"
-        app:layout_constraintBottom_toBottomOf="@+id/activityTimehourTextView"
         app:layout_constraintEnd_toStartOf="@+id/activityTimehourTextView"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/activityTimehourTextView" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView18"
@@ -213,5 +225,26 @@
         android:text="Minutes:"
         app:layout_constraintBaseline_toBaselineOf="@+id/breaksTextView"
         app:layout_constraintEnd_toStartOf="@+id/breaksTextView" />
+
+    <Button
+        android:id="@+id/cancelActivitySave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        app:layout_constraintBaseline_toBaselineOf="@+id/saveactivitybtn"
+        app:layout_constraintEnd_toStartOf="@+id/saveactivitybtn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/saveactivitybtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/breakAfterText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
